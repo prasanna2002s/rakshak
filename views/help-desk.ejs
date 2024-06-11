@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTcGpVlUHB0jLWVDh9JWrI9mQJ6dmDG1Y&callback=initMap" async></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTcGpVlUHB0jLWVDh9JWrI9mQJ6dmDG1Y&libraries=places"></script>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Rakshak - Main</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/icon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/scrollreveal@4"></script>
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <style>
+    html.sr .load-hidden {
+  visibility: hidden;
+}
+html.sr .widget {
+  visibility: hidden;
+}
+/* 
+ * Always set the map height explicitly to define the size of the div element
+ * that contains the map. 
+ */
+ #map {
+  height: 100%;
+}
+
+/* 
+ * Optional: Makes the sample page fill the window. 
+ */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#floating-panel {
+  position: absolute;
+  top: 10px;
+  left: 25%;
+  z-index: 5;
+  background-color: #fff;
+  padding: 5px;
+  border: 1px solid #999;
+  text-align: center;
+  font-family: "Roboto", "sans-serif";
+  line-height: 30px;
+  padding-left: 10px;
+}
+
+#floating-panel {
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  margin-left: -180px;
+  width: 350px;
+  z-index: 5;
+  background-color: #fff;
+  padding: 5px;
+  border: 1px solid #999;
+}
+
+#latlng {
+  width: 225px;
+}
+.dropdown-toggle::after {
+        border-top-color: #fff; /* White color */
+    }
+
+    .chat-window {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            display: none; /* Initially hidden */
+            z-index: 9999; /* Ensure a high z-index value */
+
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            cursor: pointer;
+            z-index: 9999; /* Ensure a high z-index value */
+
+        }
+
+        .scrollable-div::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+        .btn-animation
+        {
+          animation: mymove 4s infinite;
+          border-width: 2px;
+        }
+        @keyframes mymove {
+            25% {border-color: rgb(161, 121, 199);}
+            50% {border-color: lightpink;}
+            75% {border-color: lightseagreen;}
+        }
+
+  </style>
+
+</head>
+
+<body>
+
+
+  <!-- ======= Header ======= -->
+  <header id="header">
+    <div class="container d-flex align-items-center justify-content-between">
+
+      <div class="logo">
+        <h1><a href="/home">Rakshak<span>.</span></a></h1>
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto " href="/home">Home</a></li>
+          <li><a class="nav-link scrollto active" href="/help-desk">Help-Desk</a></li>
+          <li><a class="nav-link scrollto active" href="/Requests">Requests</a></li>
+          <li>
+
+            <div class="dropdown text-end">
+              <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="https://img.freepik.com/premium-vector/anonymous-user-flat-icon-vector-illustration-with-long-shadow_520826-1932.jpg" alt="mdo" width="32" height="32" class="rounded-circle">
+              </a>
+              <ul class="dropdown-menu text-small">
+                <li><a class="dropdown-item" href="">Hello , <%= user.Name %></a></li>
+                <li><a class="dropdown-item" href="">Profile</a></li>
+                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="/logout">Sign out</a></li>
+              </ul>
+            </div>
+
+          </li>
+        </ul>
+
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <main id="main">
+
+
+
+    <!-- ======= Portfolio Details Section ======= -->
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-8">
+            <div class="portfolio-details-slider swiper">
+              <div class="swiper-wrapper align-items-center">
+
+                <div class="swiper-slide">
+                    
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  
+
+                      
+                  <script>
+                    var latitude = ""
+                    var longitude = ""
+                    if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        latitude = position.coords.latitude;
+                        longitude = position.coords.longitude;
+                        document.querySelector('#latitude').innerHTML=latitude
+                        document.querySelector('#longitude').innerHTML=longitude
+                      console.log(latitude,longitude)
+                      });
+                      } else {
+                          alert("Geolocation is not supported by this browser.");
+                      }
+                    function initMap() {
+                    const map = new google.maps.Map(document.getElementById("map"), {
+                      zoom: 10,
+                      center: { lat: latitude, lng: longitude },
+                    });
+                    const geocoder = new google.maps.Geocoder();
+                    const infowindow = new google.maps.InfoWindow();
+
+                      geocodeLatLng(geocoder, map, infowindow);
+
+                    }
+                    
+                    function geocodeLatLng(geocoder, map, infowindow) {
+                      const latlng = {
+                        lat: parseFloat(latitude),
+                        lng: parseFloat(longitude),
+                      };
+                    
+                      geocoder
+                        .geocode({ location: latlng })
+                        .then((response) => {
+                          if (response.results[0]) {
+                            map.setZoom(16);
+                    
+                            const marker = new google.maps.Marker({
+                              position: latlng,
+                              map: map,
+                            });
+                    
+                            infowindow.setContent(response.results[0].formatted_address);
+                            document.querySelector('#Address').innerHTML=response.results[0].formatted_address
+                            console.log(response.results[0])
+
+                            // Create a new XMLHttpRequest object
+                            var xhr = new XMLHttpRequest();
+
+                            // Configure the request
+                            xhr.open('POST', '/save-data-add', true);
+                            xhr.setRequestHeader('Content-Type', 'application/json');
+
+                            // Send the request with the data as JSON string
+                            xhr.send(JSON.stringify({ data: response.results[0].formatted_address}));
+                            
+                            infowindow.open(map, marker);
+                          } else {
+                            window.alert("No results found");
+                          }
+                        })
+                    }
+                    window.initMap = initMap
+
+                    setInterval(()=>{
+                      const map = new google.maps.Map(document.getElementById("map"), {
+                        zoom: 10,
+                        center: { lat: latitude, lng: longitude },
+                      });
+                      const geocoder = new google.maps.Geocoder();
+                      const infowindow = new google.maps.InfoWindow();
+
+                        geocodeLatLng(geocoder, map, infowindow);
+
+                    },60000)
+
+
+
+                    setInterval(()=>{
+
+
+                      if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(function(position) {
+                        latitude = position.coords.latitude;
+                        longitude = position.coords.longitude;
+                        document.querySelector('#latitude').innerHTML=latitude
+                        document.querySelector('#longitude').innerHTML=longitude
+                        data = {Latitude:latitude,Longitude:longitude,Location:`https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=15&size=600x400&key=AIzaSyDTcGpVlUHB0jLWVDh9JWrI9mQJ6dmDG1Y`}
+
+                        // Create a new XMLHttpRequest object
+                        var xhr = new XMLHttpRequest();
+
+                        // Configure the request
+                        xhr.open('POST', '/save-data-latlang', true);
+                        xhr.setRequestHeader('Content-Type', 'application/json');
+
+                        // Send the request with the data as JSON string
+                        xhr.send(JSON.stringify({ data: data}));
+
+                      });
+                      } else {
+                          alert("Geolocation is not supported by this browser.");
+                      }
+
+                      },60000)
+
+
+
+
+                    </script>
+                    <div id="map" style="width: 50rem; height: 35rem;"></div>
+
+
+                  
+                </div>
+                </div>
+              <div class="swiper-pagination"></div>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="portfolio-info shadow rounded-4 border border-info" >
+              <h3><i class="bi bi-geo-alt"></i>&nbsp;&nbsp;Log</h3>
+              <ul >
+                <li class="widget"><i class="bi bi-check2-circle"></i>&nbsp;Fetching user's emergency contacts</li>
+                <li class="widget"><i class="bi bi-check2-circle"></i>&nbsp;Extracting Users Location</li>
+                <li class="widget"><i class="bi bi-check2-circle"></i>&nbsp;Activation of API's</li>
+                <li class="widget"><i class="bi bi-check2-circle"></i>&nbsp;Sending Location to emergency contacts</li>
+                <li class="widget"><i class="bi bi-check-circle-fill"></i>&nbsp;Data sent</li>
+              </ul>
+            </div>
+            <div class="portfolio-description">
+              <div class="container c1" id="welcomeDiv" style="display:none;" >
+                <div class="row">
+                  <div class="col-sm">
+                    <i class="bi bi-clipboard-check-fill"></i>&nbsp;Your data has been send to nearby hospitals.
+                    <br>
+                    <i class="bi bi-emoji-smile-fill"></i>&nbsp; Please keep yourself save--You may get help at any time be alert  
+                  </div>
+                </div>
+              </div>
+              
+
+              
+
+
+
+
+
+
+
+
+              <div class="container c1">
+                <div class="row">
+                  <div class="col-sm ">
+                    <ul>
+                      <ul class="list-group rounded-3 shadow">
+                        <li class="list-group-item active" aria-current="true">Traced Location</li>
+                        <li class="list-group-item"><b>Latitude: </b><span id="latitude"></span> </li>
+                        <li class="list-group-item"><b>Longitude: </b><span id="longitude"></span> </li>
+                        <li class="list-group-item"><b>Current Location: </b><span id="Address"></span> </li>
+
+
+                      </ul>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-center">
+                <div>
+                <button class="btn rounded-4 " style="background-color: #0183ff; color: white;" data-bs-toggle="modal" data-bs-target="#exampleModal"> <i class="bi bi-send-x"></i> Withdraw request </button>
+              </div>
+              </div>
+              
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">Withdraw</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                     
+                      <div class="alert alert-primary" style="color: black;" role="alert">
+                        If you withdraw, your live location will be stopped sharing to your emergency contacts.. 
+                      </div>
+                       Are you sure you want to withdraw the request..?
+                    </div>
+                    <div class="modal-footer">
+                      <form action="/delete_request" method="POST">
+                      <input type="hidden" value=<%= user.Email %> name="Email">
+                      <button type="submit" class="btn btn-danger">Proceed</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- HTML !-->
+
+
+                
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Portfolio Details Section -->
+
+  </main><!-- End #main -->
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Chatbot button -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 9999;">
+      <button class="btn rounded-circle btn-animation" style="width: 60px;  background-color: #0183ff; height: 60px;" onclick="toggleChatWindow()">
+          <img src="https://cdn-icons-png.freepik.com/512/4616/4616271.png" alt="Chatbot Icon" style="width: 40px; height: 40px;">
+      </button>
+    </div>
+
+
+
+
+    <div id="chatWindow" class="chat-window rounded-3" style="height: 35rem; width: 25rem; ">
+    
+        <div class="close-btn" onclick="toggleChatWindow()"><i class="bi bi-x-lg"></i></div>
+    
+        <!-- Chatbot content goes here -->
+        <!--========================== content area starts ===================================-->
+        <div style="overflow-y: auto; height: 28rem; width: 100%;" class="scrollable-div" id="container">
+    
+            <!--  Bot Entry starts-->
+    
+            <div class="d-flex flex-row mb-3">
+                <div class="p-2">
+                    <img class="rounded-circle card-img-top" src="https://img.freepik.com/free-vector/graident-ai-robot-vectorart_78370-4114.jpg?t=st=1711880722~exp=1711884322~hmac=a84df8ea44a843dcafe274032b0e0100efd73ed1d0cb343438c63bf248b2fab7&w=740" height="50" width="50">
+                </div>
+                <div class="w-75">
+    
+                            <!-- Reply Area -->
+                            <div class="card rounded-end shadow" style="max-width: 20rem; border: none;">
+                                <div class="card-body rounded-end">
+                                  <p> Hello! <b> <%= user.Name %> </b> <br> I'm Rakshak AI Bot. I can assist you with recommending a wide range of suggestions in any type of critical situations.</p>
+
+                                </div>
+                            </div>
+                            <!-- Reply Area Ends -->
+
+                            <div class="card rounded-end mt-2" style="max-width: 20rem; border:none">
+                              <div class="card-body rounded-end">
+  
+                                  <div class="d-flex flex-row flex-wrap">
+                                      <div class="p-1"><form onsubmit="gpt(event,'q1')" id="form_data"><button type="submit" id="request_user_profile" name="request_user_profile" value="How to handle fire accidents?" class="btn btn-outline-primary">How to handle fire accidents?</button></form></div>
+                                      <div class="p-1"><form onsubmit="gpt(event,'q2')" id="form_data"><button type="submit" id="request_user_resume" name="request_user_resume"  value="How to be in human initimidations?" class="btn btn-outline-primary">How to handle human initimidations?</button></form></div>
+                                      <div class="p-1"><form onsubmit="gpt(event,'q3')" id="form_data"><button type="submit" id="request_user_interviewing" name="request_user_interviewing" value="How to handle theft situations?" class="btn btn-outline-primary">How to handle theft situations?</button></form></div>
+  
+                                  </div>
+
+  
+                              </div>
+                          </div>
+                            
+
+    
+                </div>
+            </div>
+    
+            <!-- Bot Entry ends -->
+    
+    
+    
+    
+    
+    
+        </div>
+        <!--========================== content area ends =====================================-->
+    
+        <!-- Form Submission (Extraction of User Message) -->
+        <div class="rounded-3" style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: #0183ff;">
+            <form onsubmit="gpt(event,'gen')" id="form_data" class="p-2">
+    
+                <div class="input-group ">
+                    <span class="input-group-text"><img class="rounded-circle card-img-top" src="https://www.shutterstock.com/image-vector/beta-version-bubble-icon-cartoon-600nw-2242561483.jpg" height="40" width="40"></span>
+                    <input type="text" class="form-control" placeholder="shoot your query.."   id="request_user" name="request_user">
+                    <span class="input-group-text"><button type="submit" class="btn btn-primary"><i class="bi bi-send"></i></button></span>
+                </div>
+    
+            </form>
+        </div>
+        <!-- Form Submission ends -->
+    
+    
+    </div>
+
+
+
+
+
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+
+    <div class="footer-top">
+
+      <div class="container">
+
+        <div class="row  justify-content-center">
+          <div class="col-lg-6">
+            <h3>Rakshak</h3>
+            <p>An saviour of life threatning situation.Lets keep it for safe side, who knows the destiny !?</p>
+          </div>
+        </div>
+
+        <div class="row footer-newsletter justify-content-center">
+          <div class="col-lg-6">
+            <form>
+              <input type="email" name="email" placeholder="Enter your Email"><input type="submit" value="Subscribe">
+            </form>
+          </div>
+        </div>
+
+        <div class="social-links">
+          <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+          <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+          <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+          <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+          <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="container footer-bottom clearfix">
+      <div class="copyright">
+        &copy; Copyright <strong><span>Rakshak</span></strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+
+        Designed by <strong>Team INFINITI</strong></a>
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+  <script>
+    ScrollReveal().reveal('.headline', { duration: 2000 });
+    ScrollReveal().reveal('.widget', { interval: 1000 });
+    function showDiv() {
+   document.getElementById('welcomeDiv').style.display = "block";
+}
+
+  </script>
+
+
+
+
+
+<script
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTcGpVlUHB0jLWVDh9JWrI9mQJ6dmDG1Y&callback=initMap&v=weekly"
+defer
+></script>
+<script>
+      function toggleChatWindow() {
+    var chatWindow = document.getElementById('chatWindow');
+    if (chatWindow.style.display === 'none') {
+        chatWindow.style.display = 'block';
+    } else {
+        chatWindow.style.display = 'none';
+    }
+    }
+    
+    let form_cnt = 0;
+           console.log(document.getElementById('request_user_JD').value)
+        function gpt(event,entry) {
+            event.preventDefault();
+            let req="";
+
+            if (entry==="q1") {
+              req += document.getElementById('request_user_profile').value;
+
+            } else if (entry==="q2") {
+                req += document.getElementById('request_user_resume').value;
+            } 
+            else if(entry==="q3")
+            {
+              req += document.getElementById('request_user_interviewing').value;
+
+            }
+            else {
+                req = document.getElementById('request_user').value;
+            }
+            
+            
+            
+
+            const container = document.getElementById('container');
+            const user_html = `<div class="d-flex flex-row mb-3 flex-row-reverse">
+                                    <div class="p-2 rounded-circle">
+                                        <img class="rounded-circle card-img-top" src="https://img.freepik.com/premium-vector/anonymous-user-flat-icon-vector-illustration-with-long-shadow_520826-1932.jpg" height="30" width="30">
+                                    </div>
+                                    <div class="w-75">
+                                        <div class="card rounded-end" style="max-width: 20rem;">
+                                            <div class="card-body rounded-end">
+                                                <p id="display_query">${req}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>`;
+            container.innerHTML += user_html;
+
+            const bot_html = `<div class="d-flex flex-row mb-3">
+                                    <div class="p-2">
+                                      <img class="rounded-circle card-img-top" src="https://img.freepik.com/free-vector/graident-ai-robot-vectorart_78370-4114.jpg?t=st=1711880722~exp=1711884322~hmac=a84df8ea44a843dcafe274032b0e0100efd73ed1d0cb343438c63bf248b2fab7&w=740" height="50" width="50">
+                                    </div>
+                                    <div class="w-75">
+                                        <div class="card " id="progress${form_cnt}" aria-hidden="true" style="display:none;">
+                                            <div class="card-body">
+                                                <h5 class="card-title placeholder-glow">
+                                                    <span class="placeholder col-6"></span>
+                                                </h5>
+                                                <p class="card-text placeholder-glow">
+                                                    <span class="placeholder col-7"></span>
+                                                    <span class="placeholder col-4"></span>
+                                                    <span class="placeholder col-4"></span>
+                                                    <span class="placeholder col-6"></span>
+                                                    <span class="placeholder col-8"></span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="card rounded-4 shadow mb-4" id="display_chat${form_cnt}" style="max-width: 20rem; display:none; border:none">
+                                            <div class="card-body rounded-end ">
+                                                <p id="answer${form_cnt}"></p>
+                                            </div>
+                                        </div>
+                                        <div class="card rounded-end" style="max-width: 20rem; border:none">
+                                        <div class="card-body rounded-end">
+            
+                                            <div class="d-flex flex-row flex-wrap">
+                                                <div class="p-1"><form onsubmit="gpt(event,'q1')" id="form_data"><button type="submit" id="request_user_profile" name="request_user_profile" value="How to avoid fire accidents?" class="btn btn-outline-primary">How to avoid fire accidents?</button></form></div>
+                                                <div class="p-1"><form onsubmit="gpt(event,'q2')" id="form_data"><button type="submit" id="request_user_resume" name="request_user_resume"  value="How to be in human initimidations?" class="btn btn-outline-primary">How to be in human initimidations?</button></form></div>
+                                                <div class="p-1"><form onsubmit="gpt(event,'q3')" id="form_data"><button type="submit" id="request_user_interviewing" name="request_user_interviewing" value="How to handle theft situations?" class="btn btn-outline-primary">How to handle theft situations?</button></form></div>
+            
+                                            </div>
+
+                
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>`;
+            container.innerHTML += bot_html;
+
+            const progress_id = `progress${form_cnt}`;
+            const answer_id = `answer${form_cnt}`;
+            const display_chat = `display_chat${form_cnt}`;
+
+            document.getElementById(progress_id).style.display = 'block';
+
+            req= req.replace(/'/g, "");
+            async function runPython() {
+            try {
+                const response = await fetch('/run-python', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                    script: '/home/akhil/Desktop/Darwinview_Nodejs/public/AzureChat.py',
+                    data: req
+                })
+                });
+                const data = await response.json();
+                document.getElementById(progress_id).style.display = 'none';
+                document.getElementById(answer_id).innerHTML= (data.output);
+                document.getElementById(display_chat).style.display = 'block';
+            } catch (error) {
+                console.error('Error:', error);
+            }
+            }
+
+            runPython();
+
+            form_cnt++;
+            event.target.reset(); // Reset the form
+        }
+  </script>
+
+
+</body>
+
+</html>
+

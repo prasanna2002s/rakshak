@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTcGpVlUHB0jLWVDh9JWrI9mQJ6dmDG1Y&callback=initMap" async></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTcGpVlUHB0jLWVDh9JWrI9mQJ6dmDG1Y&libraries=places"></script>
+
+  <title>Rakshak - Home</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/icon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+  <style>
+    .image:hover
+    {
+   transform: scale(1.1);
+   transition: all 0.2s ease-in-out ;
+    }
+    .imag 
+    {
+      background-image: url(assets/img/protection.png);
+      background-repeat: no-repeat;
+      background-size: 100% ;
+    }
+    .dropdown-toggle::after {
+        border-top-color: #fff; /* White color */
+    }
+    .chat-window {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            display: none; /* Initially hidden */
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            cursor: pointer;
+        }
+
+        .scrollable-div::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+        .btn-animation
+        {
+          animation: mymove 4s infinite;
+          border-width: 2px;
+        }
+        @keyframes mymove {
+            25% {border-color: rgb(161, 121, 199);}
+            50% {border-color: lightpink;}
+            75% {border-color: lightseagreen;}
+        }
+
+  </style>
+
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header">
+    <div class="container d-flex align-items-center justify-content-between">
+
+      <div class="logo">
+        <h1><a href="/home">Rakshak<span>.</span></a></h1>
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto active" href="/home">Home</a></li>
+          <li><a class="nav-link scrollto" href="/help-desk">Help-Desk</a></li>
+          <li><a class="nav-link scrollto " href="/Requests">Requests</a></li>
+          <li>
+
+            <div class="dropdown text-end">
+              <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="https://img.freepik.com/premium-vector/anonymous-user-flat-icon-vector-illustration-with-long-shadow_520826-1932.jpg" alt="mdo" width="32" height="32" class="rounded-circle">
+              </a>
+              <ul class="dropdown-menu text-small">
+                <li><a class="dropdown-item" href="">Hello , <%= user.Name %></a></li>
+                <li><a class="dropdown-item" href="">Profile</a></li>
+                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="/logout">Sign out</a></li>
+              </ul>
+            </div>
+
+          </li>
+        </ul>
+
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero">
+
+    <div class="container">
+      <div class="row d-flex align-items-center">
+      <div class=" col-lg-6 py-5 py-lg-0 order-2 order-lg-1" data-aos="fade-right">
+        <h1>Indulged with Emergency Button </h1>
+        <h2>Please press the rakshak Label <i class="bi bi-arrow-right-short"></i> given to seek help</h2>
+        <a href="#about" class="btn-get-started scrollto" title="Know more about the application">Know More</a>
+      </div>
+      <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="fade-left">
+
+        <form action="/User_Help" method="POST" id="locationForm">
+            <input type="hidden" value="" name="latitude" id="latitude">
+            <input type="hidden" value="" name="longitude" id="longitude">
+            <input type="hidden" value="" name="location_link" id="location_link">
+            <input type="hidden" value="" name="Address" id="Address">
+            <input type="image" src="assets/img/icon.png" alt="Submit" title="Press to seek help" class="img-fluid" id="submitButton">
+        </form>
+    
+        <script>
+            var latitude = "";
+            var longitude = "";
+            var location_url = "";
+    
+            
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        latitude = position.coords.latitude;
+                        longitude = position.coords.longitude;
+                        
+                        location_url = `https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=15&size=600x400&key=AIzaSyDTcGpVlUHB0jLWVDh9JWrI9mQJ6dmDG1Y`;
+    
+                        // Set hidden input values
+                        document.getElementById("latitude").value = latitude;
+                        document.getElementById("longitude").value = longitude;
+                        document.getElementById("location_link").value = location_url;
+                        
+                        console.log(latitude)
+                        console.log(longitude)
+
+                        // Enable submit button
+                        document.getElementById("submitButton").disabled = false;
+                    });
+                } else {
+                    alert("Geolocation is not supported by this browser.");
+                }
+
+                function initMap() {
+
+                      const geocoder = new google.maps.Geocoder();
+                      const infowindow = new google.maps.InfoWindow();
+
+                        geocodeLatLng(geocoder, infowindow);
+
+                    }
+                function geocodeLatLng(geocoder, infowindow) {
+                      const latlng = {
+                        lat: parseFloat(latitude),
+                        lng: parseFloat(longitude),
+                      };
+                    
+                      geocoder
+                        .geocode({ location: latlng })
+                        .then((response) => {
+                          if (response.results[0]) {
+                            document.querySelector('#Address').value=response.results[0].formatted_address
+                            console.log(response)
+                          } else {
+                            window.alert("No results found");
+                          }
+                        })
+                    }
+                    window.initMap = initMap;
+
+            
+        </script>
+
+    </div>
+    </div>
+    </div>
+
+  </section><!-- End Hero -->
+
+  <main id="main">
+
+    <!-- ======= Clients Section ======= -->
+    <section id="clients" class="clients section-bg">
+      <div class="container">
+
+        <div class="row no-gutters clients-wrap clearfix wow fadeInUp">
+
+          <div class="col-lg-2 col-md-4 col-6">
+            <div class="client-logo">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Ministry_of_Health_India.svg/1200px-Ministry_of_Health_India.svg.png" class="img-fluid" alt="" data-aos="flip-right">
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-md-4 col-6">
+            <div class="client-logo">
+              <img src="assets/img/g20.png" class="img-fluid" alt="" data-aos="flip-right" data-aos-delay="100">
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-md-4 col-6">
+            <div class="client-logo">
+              <img src="https://ncwapps.nic.in/images/logoncw.png" class="img-fluid" alt="" data-aos="flip-right" data-aos-delay="200">
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-md-4 col-6">
+            <div class="client-logo">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Ministry_of_Law_and_Justice.svg/2560px-Ministry_of_Law_and_Justice.svg.png" class="img-fluid" alt="" data-aos="flip-right" data-aos-delay="300">
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-md-4 col-6">
+            <div class="client-logo">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Google_Maps_Logo_2020.svg/2275px-Google_Maps_Logo_2020.svg.png" class="img-fluid" alt="" data-aos="flip-right" data-aos-delay="400">
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-md-4 col-6">
+            <div class="client-logo">
+              <img src="https://upload.wikimedia.org/wikipedia/en/thumb/9/95/NITI_Aayog_logo.svg/1200px-NITI_Aayog_logo.svg.png" class="img-fluid" alt="" data-aos="flip-right" data-aos-delay="500">
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Clients Section -->
+
+    <!-- ======= About Section ======= -->
+    <section id="about" class="about section-bg">
+      <div class="container">
+
+        <div class="row gy-4">
+          <div class="col-xl-5 mt-5" class="hero-animated ">
+            <img src="assets/img/protection.png" class="img-fluid animated">
+
+          </div>
+          <div class="col-xl-7">
+            <div class="content d-flex flex-column justify-content-center ps-0 ps-xl-4">
+              <h3 data-aos="fade-in" data-aos-delay="100"><i class="bi bi-megaphone-fill"></i>&nbsp; &nbsp;Emergency Guide</h3>
+              <p data-aos="fade-in">
+                Here are the few steps inorder to escape from few types of threatening situations
+              </p>
+              <div class="row gy-4 mt-3">
+                <div class="col-md-6 icon-box" data-aos="fade-up">
+                  <i class="bi bi-fire"></i>
+                  <h4><a href="#">Fire accident</a></h4>
+                  <p>Yell "Fire!" several times and go outside right away. If you live in a building with elevators, use the stairs. Leave all your things where they are and save yourself. If closed doors or handles are warm or smoke blocks your primary escape route, use your second way out.</p>
+                </div>
+                <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="100">
+                  <i class="bi bi-person-lock"></i>
+                  <h4><a href="#">Theif Intimidation</a></h4>
+                  <p>If you can, move to a room or closet that has a locking door. Get inside and secure the lock. You might also look for a hiding spot inside the room. For instance, you might get under the bed or inside a cabinet to further conceal yourself.</p>
+                </div>
+                <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="200">
+                  <i class="bi bi-shield-shaded"></i>
+                  <h4><a href="#">women Intimidation</a></h4>
+                  <p>Give them an excuse or leave as politely as you can.Come up with an excuse to get them away from you.
+                    Yell for help if you're in immediate danger.Leave immediately and go to an area with lots of people.</p>
+                </div>
+                <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="300">
+                  <i class="bi bi-exclamation-triangle-fill"></i>
+                  <h4><a href="#">Child Abductions
+                  </a></h4>
+                  <p>Stay away from strangers.
+                    Stay away from anyone who is following you on foot or in a car.
+                    Run and scream if someone tries to force you to go somewhere with them or tries to push you into a car.
+                    Memorize a secret code word.
+                    You don't need to help an adult.</p>
+                </div>
+              </div>
+            </div><!-- End .content-->
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End About Section -->
+
+    <!-- ======= Services Section ======= -->
+    <section id="services" class="services section-bg">
+      <div class="container">
+
+        <div class="section-title">
+          <h2 data-aos="fade-in">Services</h2>
+          <p data-aos="fade-in">We provide Amazon Simple Storage Service (S3), allowing users to effortlessly store and access data in the cloud. Our DJI Tello drones are versatile, offering solutions for recreational and emergency use with real-time aerial footage capabilities. Leveraging Microsoft Azure, we empower users with AI-powered chatbots for enhanced communication and interaction. With the Google Maps Platform, we enable seamless integration of mapping and location-based services into applications and websites, facilitating navigation and geospatial functionalities. Together, we provide powerful tools for storage, communication, and navigation, meeting the needs of various industries and applications.</p>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 d-flex" data-aos="fade-right">
+            <div class="card">
+              <div class="card-img">
+                <img src="assets/img/cloud.png" alt="...">
+              </div>
+              <div class="card-body rounded-5">
+                <h5 class="card-title"><a href=""><i class="bi bi-amazon"></i>&nbsp; AWS S3</a></h5>
+                <p class="card-text">Amazon Simple Storage Service (Amazon S3) is a cloud-based object storage service provided by Amazon Web Services (AWS). It is designed to store and retrieve any amount of data from anywhere on the web. While it is commonly used for various types of data storage, including documents, backups, and log files, it is also frequently used for storing images.</p>
+                <div class="read-more"><a href="https://developers.google.com/maps/documentation/geolocation/overview"><i class="bi bi-arrow-right"></i> Read More</a></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 d-flex" data-aos="fade-left">
+            <div class="card">
+              <div class="card-img">
+                <img src="assets/img/drone.png" alt="...">
+              </div>
+              <div class="card-body rounded-5" >
+                <h5 class="card-title"><a href="">DJI Tello</a></h5>
+                <p class="card-text">
+The DJI Tello drone is compact and lightweight, ideal for both recreational and emergency use. Equipped with a camera, it provides real-time aerial footage for assessing damage and aiding in search and rescue efforts. Its small size allows it to navigate tight spaces, making it effective for surveillance and documentation in disaster zones. However, proper training and adherence to regulations are crucial for safe and effective deployment.</p>
+                <div class="read-more"><a href="https://www.twilio.com/docs/whatsapp/tutorial"><i class="bi bi-arrow-right"></i> Read More</a></div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-md-6 d-flex" data-aos="fade-right">
+            <div class="card">
+              <div class="card-img">
+                <img src="assets/img/bot.png" alt="..." >
+              </div>
+              <div class="card-body rounded-5">
+                <h5 class="card-title"><a href=""><i class="bi bi-microsoft"></i> &nbsp; Azure OpenAI Powered Bot</a></h5>
+                <p class="card-text">A Microsoft Azure AI-powered bot refers to a chatbot or conversational agent that is built using Microsoft Azure's artificial intelligence (AI) services and technologies. Microsoft Azure offers a range of AI services that developers can leverage to create intelligent bots capable of understanding natural language, interpreting user intent, and providing appropriate responses.</p>
+                <div class="read-more"><a href="https://nodemailer.com/usage/using-gmail/"><i class="bi bi-arrow-right"></i> Read More</a></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 d-flex" data-aos="fade-left">
+            <div class="card">
+              <div class="card-img">
+                <img src="assets/img/location.png" alt="...">
+              </div>
+              <div class="card-body rounded-5">
+                <h5 class="card-title"><a href=""><i class="bi bi-google"></i> &nbsp; Google Maps Platform</a></h5>
+                <p class="card-text">The Google Maps Platform provides APIs and SDKs for integrating mapping and location-based services into applications and websites. It offers features such as interactive maps, directions, geocoding, places information, street view, distance matrix calculations, elevation data, and more. Developers can leverage these tools to enhance user experiences, enable location-aware functionality, and create custom mapping solutions for various industries and applications. </p>
+                <div class="read-more"><a href="https://developers.google.com/maps/apis-by-platform"><i class="bi bi-arrow-right"></i> Read More</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End Services Section -->
+
+    <!-- ======= Features Section ======= -->
+    <section id="features" class="features section-bg">
+      <div class="container">
+
+        <div class="section-title">
+          <h2 data-aos="fade-in">Step-by-Step Guide to use <strong>Rakshak</strong></h2>
+          <p data-aos="fade-in"> Here are the steps given inorder to use the rakshak application in the life threatening situations. Please follow each step while using the application</p>
+        </div>
+        <div class="row content">
+          <div class="col-md-5" data-aos="fade-right">
+            <img src="assets/img/step-1.png" class="img-fluid f1" alt="">
+          </div>
+          <div class="col-md-7 pt-5" data-aos="fade-left">
+            <h3><strong>Step 1:</strong> Press the rakshak logo on the top of landing page to begin the process</h3>
+            <p>This ensures you the following area to give atmost and precise details of the user</p>
+            <ul>
+              <li><i class="bi bi-check"></i> Sends the location to all the emergency conatacts.</li>
+              <li><i class="bi bi-check"></i> Even in low networks it assures to send location & emergency alerts via messages.</li>
+              <li><i class="bi bi-check"></i> Facility of doctor support to book nearby hostipal causlty cases prior.</li>
+              <li><i class="bi bi-check"></i> Sends alert to nearby police stations to get quick support.</li>
+
+            </ul>
+          </div>
+        </div>
+        <div class="row content">
+          <div class="col-md-7 pt-5" data-aos="fade-left">
+            <h3>Step 2: After pressing you will be redirected to help section</h3>
+            <p> In this section user get access to find live location, doctor support desk.</p>
+            <ul>
+              <li><i class="bi bi-check"></i> As seen in marked area given aside it shows the status of sending alerts to emergency contacts </li>
+              <li><i class="bi bi-check"></i>It also shows details of longitute and latitude Information of user</li>
+              <li><i class="bi bi-check"></i> Map given here is the live location of user.</li>
+              <li><i class="bi bi-check"></i> When user clicks on doctor support it will sends all details of user to nearby hospitals.</li>
+
+            </ul>
+          </div>
+          <div class="col-md-5" data-aos="fade-right">
+            <img src="assets/img/step-2.png" class="img-fluid f1" alt="">
+          </div>
+        </div>
+        <div class="row content">
+          <div class="col-md-5" data-aos="fade-right">
+            <img src="assets/img/step-3.png" class="img-fluid f1" alt="">
+          </div>
+          <div class="col-md-7 pt-5" data-aos="fade-left">
+            <h3><strong>Step 3:</strong>Emergency contact user window</h3>
+            <p>This ensures you the following area to give atmost and precise details of the user to the emergency contacts</p>
+            <ul>
+              <li><i class="bi bi-check"></i> Gets live location details of user for every 10 seconds on updated.</li>
+              <li><i class="bi bi-check"></i> Can also view the live drone visuals from the user location.</li>
+              <li><i class="bi bi-check"></i> Can delete the unwanted or rescued requests at anytime.</li>
+
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End Features Section -->
+
+  <footer id="footer">
+
+    <div class="footer-top">
+
+      <div class="container">
+
+        <div class="row  justify-content-center">
+          <div class="col-lg-6">
+            <h3>Rakshak</h3>
+            <p>An saviour of life threatning situation.Lets keep it for safe side, who knows the destiny !?</p>
+          </div>
+        </div>
+
+        <div class="row footer-newsletter justify-content-center">
+          <div class="col-lg-6">
+            <form>
+              <input type="email" name="email" placeholder="Enter your Email"><input type="submit" value="Subscribe">
+            </form>
+          </div>
+        </div>
+
+        <div class="social-links">
+          <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+          <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+          <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+          <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+          <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+        </div>
+
+      </div>
+    </div>
+
+
+
+    <!-- Chatbot button -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 9999;">
+      <button class="btn rounded-circle btn-animation" style="width: 60px;  background-color: #0183ff; height: 60px;" onclick="toggleChatWindow()">
+          <img src="https://cdn-icons-png.freepik.com/512/4616/4616271.png" alt="Chatbot Icon" style="width: 40px; height: 40px;">
+      </button>
+    </div>
+
+
+
+
+    <div id="chatWindow" class="chat-window rounded-3" style="height: 35rem; width: 25rem; z-index: 9999; ">
+    
+        <div class="close-btn" onclick="toggleChatWindow()"><i class="bi bi-x-lg"></i></div>
+    
+        <!-- Chatbot content goes here -->
+        <!--========================== content area starts ===================================-->
+        <div style="overflow-y: auto; height: 28rem; width: 100%;" class="scrollable-div" id="container">
+    
+            <!--  Bot Entry starts-->
+    
+            <div class="d-flex flex-row mb-3">
+                <div class="p-2">
+                    <img class="rounded-circle card-img-top" src="https://img.freepik.com/free-vector/graident-ai-robot-vectorart_78370-4114.jpg?t=st=1711880722~exp=1711884322~hmac=a84df8ea44a843dcafe274032b0e0100efd73ed1d0cb343438c63bf248b2fab7&w=740" height="50" width="50">
+                </div>
+                <div class="w-75">
+    
+                            <!-- Reply Area -->
+                            <div class="card rounded-end shadow" style="max-width: 20rem; border: none;">
+                                <div class="card-body rounded-end">
+                                  <p> Hello! <b> <%= user.Name %> </b> <br> I'm Rakshak AI Bot. I can assist you with recommending a wide range of suggestions in any type of critical situations.</p>
+
+                                </div>
+                            </div>
+                            <!-- Reply Area Ends -->
+
+                            <div class="card rounded-end mt-2" style="max-width: 20rem; border:none">
+                              <div class="card-body rounded-end">
+  
+                                  <div class="d-flex flex-row flex-wrap">
+                                      <div class="p-1"><form onsubmit="gpt(event,'q1')" id="form_data"><button type="submit" id="request_user_profile" name="request_user_profile" value="How to handle fire accidents?" class="btn btn-outline-primary">How to handle fire accidents?</button></form></div>
+                                      <div class="p-1"><form onsubmit="gpt(event,'q2')" id="form_data"><button type="submit" id="request_user_resume" name="request_user_resume"  value="How to be in human initimidations?" class="btn btn-outline-primary">How to handle human initimidations?</button></form></div>
+                                      <div class="p-1"><form onsubmit="gpt(event,'q3')" id="form_data"><button type="submit" id="request_user_interviewing" name="request_user_interviewing" value="How to handle theft situations?" class="btn btn-outline-primary">How to handle theft situations?</button></form></div>
+  
+                                  </div>
+
+  
+                              </div>
+                          </div>
+                            
+
+    
+                </div>
+            </div>
+    
+            <!-- Bot Entry ends -->
+    
+    
+    
+    
+    
+    
+        </div>
+        <!--========================== content area ends =====================================-->
+    
+        <!-- Form Submission (Extraction of User Message) -->
+        <div class="rounded-3" style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: #0183ff;">
+            <form onsubmit="gpt(event,'gen')" id="form_data" class="p-2">
+    
+                <div class="input-group ">
+                    <span class="input-group-text"><img class="rounded-circle card-img-top" src="https://www.shutterstock.com/image-vector/beta-version-bubble-icon-cartoon-600nw-2242561483.jpg" height="40" width="40"></span>
+                    <input type="text" class="form-control" placeholder="shoot your query.."   id="request_user" name="request_user">
+                    <span class="input-group-text"><button type="submit" class="btn btn-primary"><i class="bi bi-send"></i></button></span>
+                </div>
+    
+            </form>
+        </div>
+        <!-- Form Submission ends -->
+    
+    
+    </div>
+
+
+    <div class="container footer-bottom clearfix">
+      <div class="copyright">
+        &copy; Copyright <strong><span>Rakshak</span></strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+
+        Designed by <strong>Team INFINITI</strong></a>
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+  <script
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTcGpVlUHB0jLWVDh9JWrI9mQJ6dmDG1Y&callback=initMap&v=weekly"
+  defer
+  ></script>
+  <script>
+    function toggleChatWindow() {
+    var chatWindow = document.getElementById('chatWindow');
+    if (chatWindow.style.display === 'none') {
+        chatWindow.style.display = 'block';
+    } else {
+        chatWindow.style.display = 'none';
+    }
+    }
+    
+    let form_cnt = 0;
+           console.log(document.getElementById('request_user_JD').value)
+        function gpt(event,entry) {
+            event.preventDefault();
+            let req="";
+
+            if (entry==="q1") {
+              req += document.getElementById('request_user_profile').value;
+
+            } else if (entry==="q2") {
+                req += document.getElementById('request_user_resume').value;
+            } 
+            else if(entry==="q3")
+            {
+              req += document.getElementById('request_user_interviewing').value;
+
+            }
+            else {
+                req = document.getElementById('request_user').value;
+            }
+            
+            
+            
+
+            const container = document.getElementById('container');
+            const user_html = `<div class="d-flex flex-row mb-3 flex-row-reverse">
+                                    <div class="p-2 rounded-circle">
+                                        <img class="rounded-circle card-img-top" src="https://img.freepik.com/premium-vector/anonymous-user-flat-icon-vector-illustration-with-long-shadow_520826-1932.jpg" height="30" width="30">
+                                    </div>
+                                    <div class="w-75">
+                                        <div class="card rounded-end" style="max-width: 20rem;">
+                                            <div class="card-body rounded-end">
+                                                <p id="display_query">${req}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>`;
+            container.innerHTML += user_html;
+
+            const bot_html = `<div class="d-flex flex-row mb-3">
+                                    <div class="p-2">
+                                      <img class="rounded-circle card-img-top" src="https://img.freepik.com/free-vector/graident-ai-robot-vectorart_78370-4114.jpg?t=st=1711880722~exp=1711884322~hmac=a84df8ea44a843dcafe274032b0e0100efd73ed1d0cb343438c63bf248b2fab7&w=740" height="50" width="50">
+                                    </div>
+                                    <div class="w-75">
+                                        <div class="card " id="progress${form_cnt}" aria-hidden="true" style="display:none;">
+                                            <div class="card-body">
+                                                <h5 class="card-title placeholder-glow">
+                                                    <span class="placeholder col-6"></span>
+                                                </h5>
+                                                <p class="card-text placeholder-glow">
+                                                    <span class="placeholder col-7"></span>
+                                                    <span class="placeholder col-4"></span>
+                                                    <span class="placeholder col-4"></span>
+                                                    <span class="placeholder col-6"></span>
+                                                    <span class="placeholder col-8"></span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="card rounded-4 shadow mb-4" id="display_chat${form_cnt}" style="max-width: 20rem; display:none; border:none">
+                                            <div class="card-body rounded-end ">
+                                                <p id="answer${form_cnt}"></p>
+                                            </div>
+                                        </div>
+                                        <div class="card rounded-end" style="max-width: 20rem; border:none">
+                                        <div class="card-body rounded-end">
+            
+                                            <div class="d-flex flex-row flex-wrap">
+                                                <div class="p-1"><form onsubmit="gpt(event,'q1')" id="form_data"><button type="submit" id="request_user_profile" name="request_user_profile" value="How to avoid fire accidents?" class="btn btn-outline-primary">How to avoid fire accidents?</button></form></div>
+                                                <div class="p-1"><form onsubmit="gpt(event,'q2')" id="form_data"><button type="submit" id="request_user_resume" name="request_user_resume"  value="How to be in human initimidations?" class="btn btn-outline-primary">How to be in human initimidations?</button></form></div>
+                                                <div class="p-1"><form onsubmit="gpt(event,'q3')" id="form_data"><button type="submit" id="request_user_interviewing" name="request_user_interviewing" value="How to handle theft situations?" class="btn btn-outline-primary">How to handle theft situations?</button></form></div>
+            
+                                            </div>
+
+                
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>`;
+            container.innerHTML += bot_html;
+
+            const progress_id = `progress${form_cnt}`;
+            const answer_id = `answer${form_cnt}`;
+            const display_chat = `display_chat${form_cnt}`;
+
+            document.getElementById(progress_id).style.display = 'block';
+
+            req= req.replace(/'/g, "");
+            async function runPython() {
+            try {
+                const response = await fetch('/run-python', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                    script: '/home/akhil/Desktop/Darwinview_Nodejs/public/AzureChat.py',
+                    data: req
+                })
+                });
+                const data = await response.json();
+                document.getElementById(progress_id).style.display = 'none';
+                document.getElementById(answer_id).innerHTML= (data.output);
+                document.getElementById(display_chat).style.display = 'block';
+            } catch (error) {
+                console.error('Error:', error);
+            }
+            }
+
+            runPython();
+
+            form_cnt++;
+            event.target.reset(); // Reset the form
+        }
+  </script>
+
+</body>
+
+</html>
