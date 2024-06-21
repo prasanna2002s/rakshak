@@ -32,7 +32,7 @@ urls = []
 image_count = 0
 
 # Initialize Twilio client
-twilio_client = Client('AC5531081c65abc8b207be4bd19bd6545b', 'ae0e4a988978c4764f16a8ab0d871dca')
+#twilio_client = Client('accid', 'ssid')
 
 # Initialize AWS S3 client
 s3 = boto3.client('s3')
